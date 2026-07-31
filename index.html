@@ -47,6 +47,13 @@
     background:radial-gradient(circle at 30% 30%, rgba(227,160,68,0.35), rgba(227,160,68,0) 70%);
   }
   .hero-inner{max-width:960px;margin:0 auto;position:relative;}
+  .hero-logo{
+    position:absolute;
+    top:0; right:0;
+    height:60px;
+    z-index:2;
+  }
+  @media (max-width:600px){ .hero-logo{ position:static; height:48px; margin-bottom:20px; } }
   .eyebrow{
     font-family:'IBM Plex Mono',monospace;
     font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
@@ -230,9 +237,9 @@
 
 <header class="hero">
   <div class="hero-inner">
-    <p class="eyebrow">Talento Humano · Drimer</p>
-    <h1>Elige tu EPS para el periodo 2026–2027</h1>
-    <p>Pacífico renovó sus tarifas y subieron. Por eso este año puedes mantenerte con Pacífico al nuevo precio, o pasarte a Rimac o Mapfre. Elige según tu bolsillo y lo que necesites cubrir.</p>
+    <img class="hero-logo" src="Logo DRIMER letras blancas (sin fondo).png" alt="Drimer">
+    <h1>¡Elige tu EPS para el periodo 2026-2027!</h1>
+    <p>Nuestra EPS actual Pacífico renovó sus tarifas y subieron de precio. Por eso, puedes participar en la elección de mantenernos con Pacífico al nuevo precio, o pasarnos a Rímac o Mapfre. Elige según las condiciones y lo que necesites cubrir.</p>
     <div class="notice">
       <span>💰</span>
       <span><b>El costo de la EPS lo asume el trabajador</b> vía descuento por planilla. Revisa bien el monto mensual antes de elegir.</span>
@@ -364,8 +371,8 @@
 
 <script>
   // ====== CONFIGURA AQUÍ ======
-  const APPS_SCRIPT_URL = "PEGA_AQUI_LA_URL_DE_TU_WEB_APP_DE_APPS_SCRIPT";
-  const PDF_COMPARATIVO_URL = "PEGA_AQUI_EL_LINK_AL_PDF_EN_DRIVE"; // opcional
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUxZUBhScM0Lf7ZZ1rn34_KDQrSqqDL0Xj6yAMYeF2s52KYG0HiFDnqzu9tIopRBx5fQ/exec";
+  const PDF_COMPARATIVO_URL = "https://rrhhdrimer.github.io/eleccion-eps/Comparativo_EPS.pdf";
   // ============================
 
   document.getElementById('moreLink').href = PDF_COMPARATIVO_URL || '#';
