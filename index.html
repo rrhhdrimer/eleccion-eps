@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elección de EPS 2026-2027 · Drimer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1C2B4A;
+    --slate:#45608C;
+    --amber:#E3A044;
+    --clay:#B65C43;
+    --sage:#4C7C59;
+    --paper:#F6F4EF;
+    --card:#FFFFFF;
+    --ink:#23262B;
+    --ink-soft:#5B6070;
+    --line:#E4E0D6;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px 80px;}
+
+  /* HERO */
+  header.hero{
+    background:linear-gradient(160deg,var(--navy) 0%, #142038 100%);
+    color:#F3EFE6;
+    padding:56px 20px 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute;
+    right:-60px; top:-60px;
+    width:280px;height:280px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(227,160,68,0.35), rgba(227,160,68,0) 70%);
+  }
+  .hero-inner{max-width:960px;margin:0 auto;position:relative;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--amber); margin:0 0 14px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(28px,4.2vw,42px);
+    line-height:1.12;
+    margin:0 0 16px;
+    max-width:620px;
+  }
+  .hero p{
+    font-size:16px;line-height:1.6;color:#C9CEDB;max-width:560px;margin:0;
+  }
+  .notice{
+    margin-top:26px;
+    display:inline-flex;gap:10px;align-items:flex-start;
+    background:rgba(227,160,68,0.12);
+    border:1px solid rgba(227,160,68,0.35);
+    border-radius:10px;
+    padding:12px 16px;
+    font-size:14px;line-height:1.55;color:#F3EFE6;
+    max-width:600px;
+  }
+  .notice b{color:var(--amber);}
+
+  /* SECTION LABELS */
+  .section-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--slate); font-weight:600;
+    margin:0 0 6px;
+  }
+  section{margin-top:48px;}
+  .section-head h2{
+    font-family:'Fraunces',serif;font-weight:600;font-size:24px;margin:0 0 6px;color:var(--navy);
+  }
+  .section-head p{margin:0;color:var(--ink-soft);font-size:14.5px;line-height:1.5;}
+
+  /* FAMILY SELECT */
+  .family-select{
+    margin-top:20px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    display:flex;flex-wrap:wrap;gap:10px;
+  }
+  .fam-btn{
+    border:1.5px solid var(--line);
+    background:#FBFAF7;
+    color:var(--ink);
+    padding:10px 16px;
+    border-radius:999px;
+    font-family:'Inter',sans-serif;
+    font-size:14px;font-weight:600;
+    cursor:pointer;
+    transition:.15s ease;
+  }
+  .fam-btn:hover{border-color:var(--slate);}
+  .fam-btn.active{
+    background:var(--navy);border-color:var(--navy);color:#fff;
+  }
+
+  /* EPS CARDS */
+  .eps-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:22px;
+  }
+  @media (max-width:760px){ .eps-grid{grid-template-columns:1fr;} }
+
+  .eps-card{
+    background:var(--card);
+    border:2px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 20px 20px;
+    cursor:pointer;
+    transition:.15s ease;
+    position:relative;
+  }
+  .eps-card:hover{border-color:var(--slate);}
+  .eps-card.selected{
+    border-color:var(--amber);
+    box-shadow:0 0 0 3px rgba(227,160,68,0.18);
+  }
+  .eps-card.selected .check{opacity:1;transform:scale(1);}
+  .eps-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .eps-name{font-family:'Fraunces',serif;font-weight:600;font-size:19px;color:var(--navy);}
+  .check{
+    width:22px;height:22px;border-radius:50%;
+    background:var(--amber);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;
+    opacity:0;transform:scale(0.6);
+    transition:.15s ease;
+  }
+  .tag{
+    display:inline-block;margin-top:6px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;font-weight:600;letter-spacing:.03em;
+    padding:3px 9px;border-radius:999px;
+  }
+  .tag.up{background:#F5E4DF;color:var(--clay);}
+  .tag.down{background:#E4EEE6;color:var(--sage);}
+
+  .eps-price{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:30px;font-weight:600;color:var(--ink);
+    margin:16px 0 2px;
+  }
+  .eps-price span{font-size:14px;color:var(--ink-soft);font-weight:500;}
+  .eps-sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;}
+
+  .eps-details{border-top:1px solid var(--line);margin-top:6px;padding-top:12px;}
+  .eps-details div{
+    display:flex;justify-content:space-between;
+    font-size:13px;color:var(--ink-soft);padding:3px 0;
+  }
+  .eps-details b{color:var(--ink);font-weight:600;}
+
+  .more-link{
+    display:inline-block;margin-top:18px;
+    font-size:13.5px;color:var(--slate);font-weight:600;text-decoration:none;
+    border-bottom:1px solid var(--slate);
+  }
+
+  /* FORM */
+  form.datos{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 24px;
+    margin-top:20px;
+  }
+  .field{margin-bottom:18px;}
+  label{display:block;font-size:13.5px;font-weight:600;color:var(--navy);margin-bottom:6px;}
+  input[type=text]{
+    width:100%;padding:11px 13px;
+    border:1.5px solid var(--line);border-radius:9px;
+    font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);
+    background:#FBFAF7;
+  }
+  input[type=text]:focus{outline:none;border-color:var(--slate);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:600px){ .row2{grid-template-columns:1fr;} }
+
+  .summary-box{
+    background:#FBFAF7;border:1px dashed var(--line);border-radius:10px;
+    padding:14px 16px;font-size:13.5px;color:var(--ink-soft);margin-bottom:18px;
+  }
+  .summary-box b{color:var(--navy);}
+
+  .consent{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--ink-soft);margin-bottom:20px;}
+  .consent input{margin-top:3px;}
+
+  button.submit{
+    width:100%;
+    background:var(--navy);color:#fff;
+    border:none;border-radius:10px;
+    padding:15px;font-size:15.5px;font-weight:700;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;transition:.15s ease;
+  }
+  button.submit:hover{background:#142038;}
+  button.submit:disabled{background:#A6ABBA;cursor:not-allowed;}
+
+  .msg{margin-top:14px;font-size:14px;text-align:center;display:none;}
+  .msg.ok{color:var(--sage);}
+  .msg.err{color:var(--clay);}
+
+  footer{
+    text-align:center;color:var(--ink-soft);font-size:12.5px;margin-top:50px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Talento Humano · Drimer</p>
+    <h1>Elige tu EPS para el periodo 2026–2027</h1>
+    <p>Pacífico renovó sus tarifas y subieron. Por eso este año puedes mantenerte con Pacífico al nuevo precio, o pasarte a Rimac o Mapfre. Elige según tu bolsillo y lo que necesites cubrir.</p>
+    <div class="notice">
+      <span>💰</span>
+      <span><b>El costo de la EPS lo asume el trabajador</b> vía descuento por planilla. Revisa bien el monto mensual antes de elegir.</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="familia">
+    <p class="section-label">Paso 1</p>
+    <div class="section-head">
+      <h2>¿Cuál es tu situación familiar?</h2>
+      <p>El precio de cada EPS cambia según a cuántas personas afilies. Selecciona tu caso para ver el costo real.</p>
+    </div>
+    <div class="family-select" id="famSelect">
+      <button type="button" class="fam-btn active" data-fam="solo">Solo yo (titular)</button>
+      <button type="button" class="fam-btn" data-fam="mas1">Titular + 1 dependiente</button>
+      <button type="button" class="fam-btn" data-fam="mas2">Titular + 2 dependientes</button>
+      <button type="button" class="fam-btn" data-fam="mas3">Titular + 3 o más dependientes</button>
+    </div>
+  </section>
+
+  <section id="comparativo">
+    <p class="section-label">Paso 2</p>
+    <div class="section-head">
+      <h2>Compara y elige tu EPS</h2>
+      <p>Toca la tarjeta de la EPS que quieres elegir. Los precios ya están calculados para tu composición familiar.</p>
+    </div>
+
+    <div class="eps-grid" id="epsGrid">
+
+      <div class="eps-card" data-eps="Pacífico">
+        <div class="eps-top">
+          <div>
+            <div class="eps-name">Pacífico EPS</div>
+            <span class="tag up">↑ 20% más que antes</span>
+          </div>
+          <div class="check">✓</div>
+        </div>
+        <div class="eps-price" data-price="pacifico">S/ 258.87<span>/mes</span></div>
+        <div class="eps-sub">Tu aseguradora actual, con tarifa renovada</div>
+        <div class="eps-details">
+          <div><span>Copago consulta</span><b>S/ 35</b></div>
+          <div><span>Cobertura ambulatoria</span><b>90%</b></div>
+          <div><span>Red top</span><b>San Felipe, Tezza</b></div>
+        </div>
+      </div>
+
+      <div class="eps-card" data-eps="Rimac">
+        <div class="eps-top">
+          <div>
+            <div class="eps-name">Rimac EPS</div>
+            <span class="tag down">↓ 9% más barato</span>
+          </div>
+          <div class="check">✓</div>
+        </div>
+        <div class="eps-price" data-price="rimac">S/ 197.46<span>/mes</span></div>
+        <div class="eps-sub">Opción más económica del concurso</div>
+        <div class="eps-details">
+          <div><span>Copago consulta</span><b>S/ 35</b></div>
+          <div><span>Cobertura ambulatoria</span><b>90%</b></div>
+          <div><span>Red top</span><b>Vesalio, Sanna</b></div>
+        </div>
+      </div>
+
+      <div class="eps-card" data-eps="Mapfre">
+        <div class="eps-top">
+          <div>
+            <div class="eps-name">Mapfre EPS</div>
+            <span class="tag down">↓ 9% más barato</span>
+          </div>
+          <div class="check">✓</div>
+        </div>
+        <div class="eps-price" data-price="mapfre">S/ 197.96<span>/mes</span></div>
+        <div class="eps-sub">Precio similar a Rimac, red propia Mapfre</div>
+        <div class="eps-details">
+          <div><span>Copago consulta</span><b>S/ 40</b></div>
+          <div><span>Cobertura ambulatoria</span><b>85%</b></div>
+          <div><span>Red top</span><b>C.M. Mapfre, Vesalio</b></div>
+        </div>
+      </div>
+
+    </div>
+
+    <a class="more-link" href="#" id="moreLink" target="_blank" rel="noopener">Ver comparativo completo del broker (PDF) →</a>
+  </section>
+
+  <section id="datos">
+    <p class="section-label">Paso 3</p>
+    <div class="section-head">
+      <h2>Tus datos</h2>
+      <p>Con esto registramos tu elección para el descuento por planilla.</p>
+    </div>
+
+    <form class="datos" id="epsForm">
+      <div class="row2">
+        <div class="field">
+          <label for="nombre">Nombres y apellidos</label>
+          <input type="text" id="nombre" required placeholder="Ej. Juana Pérez Rojas">
+        </div>
+        <div class="field">
+          <label for="dni">DNI</label>
+          <input type="text" id="dni" required placeholder="Ej. 12345678" maxlength="8" inputmode="numeric">
+        </div>
+      </div>
+      <div class="field">
+        <label for="area">Área / tienda / planta</label>
+        <input type="text" id="area" required placeholder="Ej. Tienda Saga Jockey Plaza / Planta Huachipa">
+      </div>
+
+      <div class="summary-box" id="summaryBox">
+        Composición: <b id="sumFam">Solo yo (titular)</b> · EPS elegida: <b id="sumEps">— selecciona una arriba —</b> · Aporte mensual: <b id="sumPrice">—</b>
+      </div>
+
+      <div class="consent">
+        <input type="checkbox" id="consent" required>
+        <label for="consent" style="margin:0;font-weight:400;">Autorizo el descuento por planilla del monto mensual correspondiente a la EPS que elegí.</label>
+      </div>
+
+      <button type="submit" class="submit" id="submitBtn">Confirmar mi elección de EPS</button>
+      <p class="msg" id="msgOk">✓ Tu elección quedó registrada. Gracias.</p>
+      <p class="msg" id="msgErr">No se pudo enviar. Intenta de nuevo o avisa a RRHH.</p>
+    </form>
+  </section>
+
+  <footer>Talento Humano · Drimer — Concurso EPS 2026-2027 (referencial, según cuadro de Arthur J. Gallagher Corredores de Seguros)</footer>
+</div>
+
+<script>
+  // ====== CONFIGURA AQUÍ ======
+  const APPS_SCRIPT_URL = "PEGA_AQUI_LA_URL_DE_TU_WEB_APP_DE_APPS_SCRIPT";
+  const PDF_COMPARATIVO_URL = "PEGA_AQUI_EL_LINK_AL_PDF_EN_DRIVE"; // opcional
+  // ============================
+
+  document.getElementById('moreLink').href = PDF_COMPARATIVO_URL || '#';
+
+  const precios = {
+    solo: { pacifico: 258.87, rimac: 197.46, mapfre: 197.96 },
+    mas1: { pacifico: 517.76, rimac: 394.92, mapfre: 395.92 },
+    mas2: { pacifico: 776.64, rimac: 592.38, mapfre: 593.87 },
+    mas3: { pacifico: 1035.53, rimac: 789.85, mapfre: 791.83 },
+  };
+  const famLabels = {
+    solo: "Solo yo (titular)",
+    mas1: "Titular + 1 dependiente",
+    mas2: "Titular + 2 dependientes",
+    mas3: "Titular + 3 o más dependientes",
+  };
+
+  let famActual = "solo";
+  let epsElegida = null;
+
+  function fmt(n){ return "S/ " + n.toFixed(2); }
+
+  function pintarPrecios(){
+    document.querySelectorAll("[data-price]").forEach(el=>{
+      const key = el.getAttribute("data-price");
+      const val = precios[famActual][key];
+      el.innerHTML = fmt(val) + "<span>/mes</span>";
+    });
+    document.getElementById('sumFam').textContent = famLabels[famActual];
+    actualizarResumenPrecio();
+  }
+
+  function actualizarResumenPrecio(){
+    const sumPrice = document.getElementById('sumPrice');
+    if(epsElegida){
+      const key = epsElegida.toLowerCase() === "pacífico" ? "pacifico" : epsElegida.toLowerCase();
+      sumPrice.textContent = fmt(precios[famActual][key]);
+    } else {
+      sumPrice.textContent = "—";
+    }
+  }
+
+  document.querySelectorAll('.fam-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.fam-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      famActual = btn.getAttribute('data-fam');
+      pintarPrecios();
+    });
+  });
+
+  document.querySelectorAll('.eps-card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      document.querySelectorAll('.eps-card').forEach(c=>c.classList.remove('selected'));
+      card.classList.add('selected');
+      epsElegida = card.getAttribute('data-eps');
+      document.getElementById('sumEps').textContent = epsElegida;
+      actualizarResumenPrecio();
+    });
+  });
+
+  pintarPrecios();
+
+  document.getElementById('epsForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    if(!epsElegida){
+      alert("Por favor selecciona una EPS antes de continuar.");
+      return;
+    }
+    const btn = document.getElementById('submitBtn');
+    const msgOk = document.getElementById('msgOk');
+    const msgErr = document.getElementById('msgErr');
+    msgOk.style.display = "none";
+    msgErr.style.display = "none";
+    btn.disabled = true;
+    btn.textContent = "Enviando...";
+
+    const key = epsElegida.toLowerCase() === "pacífico" ? "pacifico" : epsElegida.toLowerCase();
+    const payload = {
+      nombre: document.getElementById('nombre').value.trim(),
+      dni: document.getElementById('dni').value.trim(),
+      area: document.getElementById('area').value.trim(),
+      composicionFamiliar: famLabels[famActual],
+      epsElegida: epsElegida,
+      aporteMensual: precios[famActual][key],
+      fecha: new Date().toISOString(),
+    };
+
+    try{
+      await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload)
+      });
+      msgOk.style.display = "block";
+      document.getElementById('epsForm').reset();
+      document.querySelectorAll('.eps-card').forEach(c=>c.classList.remove('selected'));
+      epsElegida = null;
+      document.getElementById('sumEps').textContent = "— selecciona una arriba —";
+      actualizarResumenPrecio();
+      btn.textContent = "Confirmar mi elección de EPS";
+      btn.disabled = false;
+    }catch(err){
+      msgErr.style.display = "block";
+      btn.textContent = "Confirmar mi elección de EPS";
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
